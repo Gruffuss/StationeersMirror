@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetadata xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>Mirror</Name>
+  <ModID>gruffuss.stationeersmirror</ModID>
+  <Author>Gruffuss</Author>
+  <Version>0.6.0</Version>
+  <Description>
+[h1]Mirror[/h1]
+[i]Build any structure the other way around.[/i]
+
+Pumps, regulators, filtration units, docks and almost every other structure can be placed mirrored: no new kits, no new prefabs. A mirrored structure is the same item as the normal one, so your IC10 batch instructions ([b]lb[/b], [b]sb[/b], [b]sbn[/b]) still find it by its usual prefab hash.
+
+[b]This is a Plugin Mod.[/b] It needs BepInEx with the StationeersLaunchPad plugin.
+[img]https://raw.githubusercontent.com/Gruffuss/badges/main/ai-assisted.png[/img]
+
+[hr][/hr]
+[h2]⚠️ Back up your save first[/h2]
+[b]This mod writes extra data into your save[/b]: a marker on every structure you mirror. The game still loads such a save without the mod (mirrored structures simply come back unmirrored), but any mod that touches saves carries some risk.
+[b]A backup costs nothing. A lost base costs a lot.[/b]
+
+[hr][/hr]
+[h2]🔧 How to use[/h2]
+[list]
+[*][b]Press M[/b] while holding a kit. While mirroring is on, the placement panel says [b]Mirrored. Press M to undo.[/b]
+[*][b]Place as usual.[/b] Rotation works exactly as for the normal structure.
+[*][b]One build per press.[/b] M switches off after you place, when you put the kit away, or when you take another kit. Letting go before the build finishes keeps it on.
+[/list]
+
+[h2]🚫 Not mirrorable[/h2]
+[table]
+[tr][th]Structure[/th][th]Why[/th][/tr]
+[tr][td]Pipes and cables[/td][td]A mirrored pipe or cable piece is just another rotation[/td][/tr]
+[tr][td]Consoles and logic displays[/td][td]Their screens decide orientation from the structure's own axes[/td][/tr]
+[tr][td]Walls, window shutters, seats, launch mounts[/td][td]Their code depends on left and right[/td][/tr]
+[tr][td]Rocket hulls[/td][td]Not supported[/td][/tr]
+[/table]
+Pressing M on one of these shows the reason in the game console.
+
+[h2]⚙️ Settings[/h2]
+In the StationeersLaunchPad mod settings:
+[list]
+[*][b]Controls / ToggleMirror[/b]: the mirror key (default [b]M[/b]).
+[*][b]Controls / OneBuildPerPress[/b] (default on): turn off to keep M on until you press it again.
+[*][b]Controls / KeepControlsVanilla[/b] (default on): turn off to mirror switches, buttons, knobs, dials and wheels along with the structure. Only changes how your own game shows them.
+[*][b]Diagnostics / Debug[/b] (default off): detailed logging for bug reports.
+[/list]
+
+[h2]🌐 Multiplayer[/h2]
+[b]Multiplayer has not been tested yet.[/b] Every player needs the mod, in the same version. A player without it, or with another version, is refused at join with the mismatch listed, instead of joining into a broken game.
+
+[h2]🧩 Known limits[/h2]
+[list]
+[*]Lettering painted onto a structure's model, like "FILL TANK" on the gas tank storage, reads backwards on a mirrored copy. Screens and text drawn by the game stay readable.
+[*]Cloning a rocket loses the mirror on the devices inside it.
+[*]A control nested deep inside another moving part may stay mirrored; with Debug on, the log names it.
+[/list]
+
+[hr][/hr]
+[h2]📋 Requirements[/h2]
+[list]
+[*][url=https://github.com/BepInEx/BepInEx]BepInEx 5.x[/url]
+[*][url=https://github.com/StationeersLaunchPad/StationeersLaunchPad]StationeersLaunchPad[/url]
+[/list]
+
+[h2]🔗 Source and issues[/h2]
+[url=https://github.com/Gruffuss/StationeersMirror]github.com/Gruffuss/StationeersMirror[/url]
+  </Description>
+  <Tags>
+    <Tag>Mod</Tag>
+    <Tag>BepInEx</Tag>
+    <Tag>StationeersLaunchPad</Tag>
+  </Tags>
+</ModMetadata>

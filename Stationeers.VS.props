@@ -1,0 +1,70 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="$(MSBuildThisFileDirectory)Stationeers.VS.User.props" />
+	<PropertyGroup>
+		<TargetFramework Condition="'$(TargetFramework)' == ''">netstandard2.1</TargetFramework>
+		<TargetFrameworkVersion Condition="'$(TargetFrameworkVersion)' == '' and '$(TargetFramework)' == 'net4.8'">v4.8</TargetFrameworkVersion>
+		<AnalysisLevel>latest-all</AnalysisLevel>
+		<LangVersion>latest</LangVersion>
+		<ErrorReport>none</ErrorReport>
+		<LanguageTargets>$(MSBuildToolsPath)\Microsoft.CSharp.targets</LanguageTargets>
+		<NoStandardLibraries>true</NoStandardLibraries>
+		<NoStdLib>true</NoStdLib>
+		<NoConfig>true</NoConfig>
+		<DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<Configurations>Debug;Release</Configurations>
+		<PlatformTarget>x64</PlatformTarget>
+		<Platforms>x64;x86</Platforms>
+		<WarningLevel>4</WarningLevel>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<!-- Shipped Unity/Mono references disagree on System.Net.Http (4.0/4.2)
+		     and System.Windows.Forms (2.0/4.0). Use the game's primary DLLs. -->
+		<NoWarn>$(NoWarn);MSB3277</NoWarn>
+		<StationeersDirectory>$(SteamLibraryDirectory)\Stationeers</StationeersDirectory>
+		<StationeersDataDirectory>$(StationeersDirectory)\rocketstation_Data</StationeersDataDirectory>
+		<StationeersManagedDirectory>$(StationeersDataDirectory)\Managed</StationeersManagedDirectory>
+		<StationeersPluginsDirectory>$(StationeersDataDirectory)\Plugins</StationeersPluginsDirectory>
+		<StationeersResourcesDirectory>$(StationeersDataDirectory)\Resources</StationeersResourcesDirectory>
+		<StationeersStreamingAssetsDirectory>$(StationeersDataDirectory)\StreamingAssets</StationeersStreamingAssetsDirectory>
+		<!-- Default assumes Documents is not redirected; override in User.props when it is (OneDrive, etc.). -->
+		<StationeersDocumentsDirectory Condition="'$(StationeersDocumentsDirectory)' == ''">C:\Users\$(username)\Documents\My Games\Stationeers</StationeersDocumentsDirectory>
+		<BIEDirectory>$(StationeersDirectory)\BepInEx</BIEDirectory>
+		<BIECoreDirectory>$(BIEDirectory)\core</BIECoreDirectory>
+		<BIEPatchersDirectory>$(BIEDirectory)\patchers</BIEPatchersDirectory>
+		<BIEPluginsDirectory>$(BIEDirectory)\plugins</BIEPluginsDirectory>
+		<StationeersLaunchPadDirectory>$(BIEPluginsDirectory)\StationeersLaunchPad</StationeersLaunchPadDirectory>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+		<DebugType>portable</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)' != 'Debug'">
+		<DebugType>embedded</DebugType>
+	</PropertyGroup>
+	<ItemGroup>
+		<CopyItemsGameData Include="$(ProjectDir)\GameData\**\*.*" />
+		<CopyItemsAbout Include="$(ProjectDir)\About\**\*.*" />
+		<CopyItemsAssets Include="$(ProjectDir)\Assets\**\*.*" />
+	</ItemGroup>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<!-- Overwrite only this mod's build outputs; preserve manually deployed files. -->
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(StationeersDocumentsDirectory)\mods\$(ModName)" ContinueOnError="true" Retries="0" RetryDelayMilliseconds="0" />
+		<ItemGroup Condition="'$(Configuration)' == 'Debug'">
+			<_ModDebugSymbols Include="$(TargetDir)*.pdb" />
+		</ItemGroup>
+		<Copy SourceFiles="@(_ModDebugSymbols)" DestinationFolder="$(StationeersDocumentsDirectory)\mods\$(ModName)" ContinueOnError="true" Retries="0" RetryDelayMilliseconds="0" Condition="'$(Configuration)' == 'Debug' and '@(_ModDebugSymbols)' != ''" />
+		<Copy SourceFiles="@(CopyItemsGameData)" DestinationFolder="$(StationeersDocumentsDirectory)\mods\$(ModName)\GameData\%(RecursiveDir)" ContinueOnError="true" />
+		<Copy SourceFiles="@(CopyItemsAbout)" DestinationFolder="$(StationeersDocumentsDirectory)\mods\$(ModName)\About\%(RecursiveDir)" ContinueOnError="true" />
+		<Copy SourceFiles="@(CopyItemsAssets)" DestinationFolder="$(StationeersDocumentsDirectory)\mods\$(ModName)\Assets\%(RecursiveDir)" ContinueOnError="true" />
+	</Target>
+	<ItemGroup>
+		<Compile Remove="bin\**" />
+		<Compile Remove="obj\**" />
+		<EmbeddedResource Remove="bin\**" />
+		<EmbeddedResource Remove="obj\**" />
+		<None Remove="bin\**" />
+		<None Remove="obj\**" />
+	</ItemGroup>
+</Project>

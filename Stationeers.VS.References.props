@@ -1,0 +1,10 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <SystemDll Include="$(StationeersManagedDirectory)\mscorlib.dll;$(StationeersManagedDirectory)\netstandard.dll;$(StationeersManagedDirectory)\System*.dll" />
+    <GameDll Include="$(StationeersManagedDirectory)\Assembly-CSharp.dll;$(StationeersManagedDirectory)\Assembly-CSharp-firstpass.dll;$(StationeersManagedDirectory)\UnityEngine*.dll;$(StationeersManagedDirectory)\Unity.TextMeshPro.dll" />
+    <ModDll Include="$(BIECoreDirectory)\BepInEx.dll;$(BIECoreDirectory)\0Harmony.dll;$(StationeersLaunchPadDirectory)\StationeersMods.Interface.dll;$(StationeersLaunchPadDirectory)\LaunchPadBooster.dll" />
+    <Reference Include="@(SystemDll);@(GameDll);@(ModDll)">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

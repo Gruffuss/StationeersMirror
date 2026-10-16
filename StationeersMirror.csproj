@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ModName>StationeersMirror</ModName>
+    <AssemblyName>$(ModName)</AssemblyName>
+    <RootNamespace>$(ModName)</RootNamespace>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Version>0.6.0</Version>
+    <PathMap>$(MSBuildProjectDirectory)=/src/StationeersMirror</PathMap>
+    <EnableSourceLink>false</EnableSourceLink>
+    <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <Import Project="Stationeers.VS.props" />
+  <Import Project="Stationeers.VS.References.props" />
+  <PropertyGroup>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
+    <FileVersion>$(Version)</FileVersion>
+    <AnalysisLevel>latest</AnalysisLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="tools\**\*.cs" />
+  </ItemGroup>
+  <Target Name="GenerateVersionConst" BeforeTargets="CoreCompile">
+    <PropertyGroup>
+      <_VersionConstFile>$(IntermediateOutputPath)PluginVersionConst.g.cs</_VersionConstFile>
+    </PropertyGroup>
+    <WriteLinesToFile File="$(_VersionConstFile)" Overwrite="true" Lines="namespace $(RootNamespace) { internal static partial class PluginInfo { internal const string PLUGIN_VERSION_CONST = %22$(Version)%22%3B } }" />
+    <ItemGroup>
+      <Compile Include="$(_VersionConstFile)" />
+    </ItemGroup>
+  </Target>
+</Project>

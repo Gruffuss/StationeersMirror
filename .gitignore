@@ -1,0 +1,6 @@
+bin/
+obj/
+.vs/
+*.user
+# machine paths; copy Stationeers.VS.User.props.example and edit
+Stationeers.VS.User.props
