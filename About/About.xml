@@ -65,6 +65,7 @@ In the StationeersLaunchPad mod settings:
 [h2]🔗 Source and issues[/h2]
 [url=https://github.com/Gruffuss/StationeersMirror]github.com/Gruffuss/StationeersMirror[/url]
   </Description>
+  <WorkshopHandle>3821094186</WorkshopHandle>
   <Tags>
     <Tag>Mod</Tag>
     <Tag>BepInEx</Tag>
