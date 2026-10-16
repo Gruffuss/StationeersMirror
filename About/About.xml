@@ -8,6 +8,8 @@
 [h1]Mirror[/h1]
 [i]Build any structure the other way around.[/i]
 
+[b]🚧 Work in progress.[/b] Expect rough edges; please report problems through the source link at the bottom.
+
 Pumps, regulators, filtration units, docks and almost every other structure can be placed mirrored: no new kits, no new prefabs. A mirrored structure is the same item as the normal one, so your IC10 batch instructions ([b]lb[/b], [b]sb[/b], [b]sbn[/b]) still find it by its usual prefab hash.
 
 [b]This is a Plugin Mod.[/b] It needs BepInEx with the StationeersLaunchPad plugin.
